@@ -1,0 +1,29 @@
+# Network Security Configuration Example
+# Region: me-central2 (Dammam, KSA)
+
+billing_account = "XXXXXX-XXXXXX-XXXXXX" # Replace with actual billing account
+folder_ids = {
+  networking = "folders/XXXXXXXXXX" # Replace with actual folder ID
+}
+
+# Firewall Policy Configuration
+firewall_policy_config = {
+  name = "policy-security-dev"
+  region = "me-central2"  # Dammam region
+}
+
+# NGFW Configuration
+# Note: Temporarily using europe-west1 for NGFW endpoints until me-central2 becomes available
+ngfw_config = {
+  name = "ngfw-dev"
+  region = "europe-west1"  # Temporary region
+  endpoint_zones = [
+    "europe-west1-b",
+    "europe-west1-c",
+    "europe-west1-d"
+  ]
+  network = {
+    network = "projects/vpc-host-dev/global/networks/dev-spoke-0"
+    subnetwork = "projects/vpc-host-dev/regions/europe-west1/subnetworks/dev-ngfw-0"
+  }
+}

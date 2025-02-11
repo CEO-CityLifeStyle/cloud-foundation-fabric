@@ -1,0 +1,51 @@
+# GKE Development Environment Configuration Example
+# Region: me-central2 (Dammam, KSA)
+
+billing_account = "XXXXXX-XXXXXX-XXXXXX" # Replace with actual billing account
+folder_ids = {
+  gke-dev = "folders/XXXXXXXXXX" # Replace with actual folder ID
+}
+
+# VPC Configuration
+vpc_config = {
+  host_project_id = "vpc-host-dev"
+  vpc_self_link   = "projects/vpc-host-dev/global/networks/dev-spoke-0"
+}
+
+# GKE Cluster Configuration
+clusters = {
+  "cls-gke-plat-dev-01" = {
+    location = "me-central2"  # Dammam region
+    vpc_config = {
+      subnetwork = "projects/vpc-host-dev/regions/me-central2/subnetworks/dev-gke-0"
+    }
+    cluster_autoscaling = {
+      auto_provisioning_defaults = {
+        management = {
+          auto_repair  = true
+          auto_upgrade = true
+        }
+      }
+      cpu_limits = {
+        min = 1
+        max = 8
+      }
+      mem_limits = {
+        min = 4
+        max = 32
+      }
+    }
+    enable_features = {
+      workload_identity = true
+      dataplane_v2     = true
+    }
+    logging_config = {
+      enable_system_logs = true
+      enable_workloads_logs = true
+    }
+    monitoring_config = {
+      enable_system_metrics = true
+      enable_managed_prometheus = true
+    }
+  }
+}
